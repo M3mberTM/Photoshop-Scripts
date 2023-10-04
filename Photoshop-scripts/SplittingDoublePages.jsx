@@ -37,6 +37,6 @@
     doublePage.selection.copy();
     var secondPart = app.documents.add(layerWidth / 2, layerHeight);
     app.activeDocument.paste();
-
+    //Code done
     alert("Splitting done!")
 })();
