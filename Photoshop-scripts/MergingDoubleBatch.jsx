@@ -48,7 +48,7 @@
         columnTitles: ['First File', 'Second file']
     });
 
-    //Saving...
+    //Saving
     panel = window.add("panel", undefined, "Saving...");
 
     //Select the final directory where the saved files will be
