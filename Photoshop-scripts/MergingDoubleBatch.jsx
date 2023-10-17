@@ -1,3 +1,9 @@
+// Written in 2023
+
+// Written by M3mber (Discord)
+
+// This script is for merging of single pages together to form a manga double page. Done with whole user interface and mostly for batch purposes
+
 (function() {
 
     //basic variables-------------------------------------------------------
@@ -15,6 +21,7 @@
     //Other vars-------------------------------------------------------
     var mergeIsFront = true;
     var saveExtension = "png";
+    var isNamingNumbers = true;
 
     //Options-------------------------------------------------------
     app.displayDialogs = DialogModes.NO;
@@ -58,6 +65,11 @@
     });
     var btnSelectDir = group.add("button", undefined, "Select");
     txtDir.preferredSize = [200, -1];
+
+    group = panel.add("group");
+    var txt = group.add("statictext", undefined, "File naming");
+    var radioNameNum = group.add("radiobutton", undefined, "Page <num1>-<num2>");
+    var radioNameFull = group.add("radiobutton", undefined, "<FileOne>-<FileTwo>");
 
     group = panel.add("group");
     var txt = group.add("statictext", undefined, "Preferred extension");
@@ -111,6 +123,14 @@
 
     radioPng.onClick = function() {
         saveExtension = "png";
+    };
+
+    radioNameFull.onClick = function() {
+        isNamingNumbers = false;
+    };
+
+    radioNameNum.onClick = function() {
+        isNamingNumbers = true;
     };
 
     btnOk.onClick = function() {
@@ -176,27 +196,54 @@
         docToSave.saveAs(file, saveOptions);
     }
 
-    function batch() { //TODO simplify this function
+
+    function getPageNum(nameOne, nameTwo) {
+
+        var pattern = /\d+/g;
+        var oneMatches = nameOne.match(pattern);
+        var twoMatches = nameTwo.match(pattern);
+        for (var i = 0; i < oneMatches.length; i++) {
+
+            if (oneMatches[i] != twoMatches[i]) {
+                return [oneMatches[i], twoMatches[i]];
+            }
+        }
+    }
+
+    function getFileName(nameOne, nameTwo) {
+        if (isNamingNumbers) {
+            var pageNums = getPageNum(nameOne, nameTwo);
+            if (pageNums) {
+                return "page " + pageNums[0] + "-" + pageNums[1];
+            }
+            return nameOne + "-" + nameTwo;
+
+        } else {
+            return nameOne + "-" + nameTwo;
+        }
+    }
+
+    function batch() {
 
         if (mergeIsFront) {
             for (var index = 0; index < files.length; index += 2) {
-                var fileOne = files[index].name.replace(/\.(\w|\d)+$/, "");
-                var fileTwo = files[index + 1].name.replace(/\.(\w|\d)+$/, "");
+                var fileOne = File.decode(files[index].name).replace(/\.(\w|\d)+$/, "");
+                var fileTwo = File.decode(files[index + 1].name).replace(/\.(\w|\d)+$/, "");
                 if (saveExtension == "jpg") {
-                    saveJpg(merge(index, index + 1), fileOne + "-" + fileTwo);
+                    saveJpg(merge(index, index + 1), getFileName(fileOne, fileTwo));
                 } else {
-                    savePng(merge(index, index + 1), fileOne + "-" + fileTwo);
+                    savePng(merge(index, index + 1), getFileName(fileOne, fileTwo));
                 }
                 app.activeDocument.close(SaveOptions.DONOTSAVECHANGES);
             }
         } else {
             for (var index = 0; index < files.length; index += 2) {
-                var fileOne = files[index + 1].name.replace(/\.(\w|\d)+$/, "");
-                var fileTwo = files[index].name.replace(/\.(\w|\d)+$/, "");
+                var fileOne = File.decode(files[index + 1].name).replace(/\.(\w|\d)+$/, "");
+                var fileTwo = File.decode(files[index].name).replace(/\.(\w|\d)+$/, "");
                 if (saveExtension == "jpg") {
-                    saveJpg(merge(index, index + 1), fileOne + "-" + fileTwo);
+                    saveJpg(merge(index+1, index), getFileName(fileOne, fileTwo));
                 } else {
-                    savePng(merge(index, index + 1), fileOne + "-" + fileTwo);
+                    savePng(merge(index+1, index), getFileName(fileOne, fileTwo));
                 }
                 app.activeDocument.close(SaveOptions.DONOTSAVECHANGES);
             }
@@ -209,11 +256,11 @@
                 list.removeAll();
                 for (var index = 0; index < files.length; index += 2) {
                     if (mergeIsFront) {
-                        var itemOne = list.add('item', files[index].name);
-                        itemOne.subItems[0].text = files[index + 1].name;
+                        var itemOne = list.add('item', File.decode(files[index].name));
+                        itemOne.subItems[0].text = File.decode(files[index + 1].name);
                     } else {
-                        var itemOne = list.add('item', files[index + 1].name);
-                        itemOne.subItems[0].text = files[index].name;
+                        var itemOne = list.add('item', File.decode(files[index + 1].name));
+                        itemOne.subItems[0].text = File.decode(files[index].name);
                     }
                 }
             }
