@@ -15,3 +15,6 @@ This script allows you to choose in which order the files should be merged into 
 ## SplittingDoubleBatch
 A script designed for batch purposes when splitting manga double spreads. Comes with user interface. Again, naming that includes the page numbers might not work 100% of the time. 
 This script allows you to choose which file should be thought of as the first page and second page, how they should be named and where they should be saved!
+
+## PsdToImg
+A script for easy conversion of psd files into png or jpg. Technically, it works for conversion of any file that can be opened in Photoshop into png and jpg, but the main intension was the batch saving of psd files.

@@ -293,26 +293,26 @@
                 if (isSplitOne) {
                     if (saveExtension == saveExtensions.PNG) {
                         savePng(pages[0], fileNames[0]);
-                        app.activeDocument.close();
+                        app.activeDocument.close(SaveOptions.DONOTSAVECHANGES);
                         savePng(pages[1], fileNames[1]);
-                        app.activeDocument.close();
+                        app.activeDocument.close(SaveOptions.DONOTSAVECHANGES);
                     } else {
                         saveJpg(pages[0], fileNames[0]);
-                        app.activeDocument.close();
+                        app.activeDocument.close(SaveOptions.DONOTSAVECHANGES);
                         saveJpg(pages[1], fileNames[1]);
-                        app.activeDocument.close();
+                        app.activeDocument.close(SaveOptions.DONOTSAVECHANGES);
                     }
                 } else {
                     if (saveExtension == saveExtensions.PNG) {
                         savePng(pages[0], fileNames[1]);
-                        app.activeDocument.close();
+                        app.activeDocument.close(SaveOptions.DONOTSAVECHANGES);
                         savePng(pages[1], fileNames[0]);
-                        app.activeDocument.close();
+                        app.activeDocument.close(SaveOptions.DONOTSAVECHANGES);
                     } else {
                         saveJpg(pages[0], fileNames[1]);
-                        app.activeDocument.close();
+                        app.activeDocument.close(SaveOptions.DONOTSAVECHANGES);
                         saveJpg(pages[1], fileNames[0]);
-                        app.activeDocument.close();
+                        app.activeDocument.close(SaveOptions.DONOTSAVECHANGES);
                     }
                 }
             }
