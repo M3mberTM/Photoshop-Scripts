@@ -1,6 +1,6 @@
-// Written in 2023
+// Written in 2024
 
-// Written by M3mber (Discord)
+// Written by m3mber (Discord)
 
 // A script for removing whitespace at the beginning and end of lines on text layers
 
