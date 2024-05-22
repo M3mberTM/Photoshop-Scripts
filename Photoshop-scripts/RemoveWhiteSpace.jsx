@@ -25,7 +25,7 @@ var docRef = app.activeDocument;
         selectByID(layers[i].id, true);
     }
 
-    alert("Script is done", 'Remove whitespace script', true);
+   //  alert("Script is done", 'Remove whitespace script', true);
 
 
     function getSelectedLayersInfo() {

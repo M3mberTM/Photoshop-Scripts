@@ -18,3 +18,6 @@ This script allows you to choose which file should be thought of as the first pa
 
 ## PsdToImg
 A script for easy conversion of psd files into png or jpg. Technically, it works for conversion of any file that can be opened in Photoshop into png and jpg, but the main intension was the batch saving of psd files.
+
+## RemoveWhiteSpace
+A script for removal of whitespace (additional spaces at the end of lines mostly but also other invisible characters). Script works on multiple layers selected at once!
